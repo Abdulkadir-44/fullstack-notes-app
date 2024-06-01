@@ -73,6 +73,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
 
     try {
+        console.log(req.body);
         const { email, password } = req.body
         if (!email) return res.status(400).json({ message: "Email zorunlu !" })
         if (!password) return res.status(400).json({ message: "Şifre zorunlu !" })
