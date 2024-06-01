@@ -61,7 +61,7 @@ const SignUp = () => {
         richColors />
       <div className='flex flex-col min-h-screen'>
         <Navbar />
-        <div className='login-page flex-1 flex justify-center items-center '>
+        <div className='bg-gradient-to-r from-indigo-500 to-purple-500 flex-1 flex justify-center items-center '>
           <div className='border border-gray-300 p-4 backdrop-blur-lg rounded md:w-[50%] md:flex md:flex-col md:items-center '>
             <form className='md:w-[80%] ' onSubmit={handleSubmit}>
               <h1 className='text-center text-3xl font-semibold mb-5 md:text-4xl text-gray-100'>Sign Up</h1>
@@ -114,11 +114,10 @@ const SignUp = () => {
                   }
                 </button>
               </div>
-              <div className='flex gap-x-4 text-sm md:text-base justify-center text-white md:justify-start '>
-                <p className='md:text-gray-800'>Bir hesabınız var mı ?</p>
+              <div className='flex gap-x-4  md:text-base items-center justify-center text-white md:justify-start '>
+                <p className='text-sm md:text-base'>Bir hesabınız var mı ?</p>
                 <NavLink
-                  className="underline underline-offset-2
-                             hover:text-blue-400"
+                  className="underline underline-offset-2 text-indigo-900 "
                   to="/login">
                   Giriş Yap
                 </NavLink>

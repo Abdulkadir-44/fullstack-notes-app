@@ -23,9 +23,9 @@
         background-position: top;
     }
     .input{
-        @apply w-full text-sm bg-transparent py-3 text-white  rounded outline-none placeholder:text-gray-300 md:placeholder:text-gray-600 md:text-gray-800 md:text-base placeholder:italic
+        @apply w-full text-sm bg-transparent py-3 text-white  rounded outline-none placeholder:text-gray-300  md:text-base placeholder:italic
     }
     .button{
-        @apply bg-white text-indigo-900 py-2 px-5 rounded-md w-full my-4 hover:bg-indigo-900 hover:text-white transition-all md:bg-indigo-800 md:text-white md:hover:bg-white md:hover:text-indigo-900 md:text-lg
+        @apply bg-white text-indigo-900 py-2 px-5 rounded-md w-full my-4 hover:bg-indigo-900 hover:text-white transition-all md:text-lg
     }
 }
