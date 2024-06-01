@@ -4,9 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 @layer base{
-    html{
-        font-family:"Poppins","sans-serif"
+    html,body{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:"Poppins","sans-serif" ;
     }
     
 }
@@ -15,7 +20,7 @@
     .login-page{
         background-image: url('/login_background.svg');
         background-size: cover;
-        background-position: center;
+        background-position: top;
     }
     .input{
         @apply w-full text-sm bg-transparent py-3 text-white  rounded outline-none placeholder:text-gray-300 md:placeholder:text-gray-600 md:text-gray-800 md:text-base placeholder:italic

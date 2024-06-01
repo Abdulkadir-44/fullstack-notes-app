@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const User = require("../models/user")
 const jwt = require("jsonwebtoken")
-const {tokenVerification} = require("../utils/tokenVerification")
+const { tokenVerification } = require("../utils/tokenVerification")
 
 
 //GET USER
@@ -24,8 +24,8 @@ router.get("/get-user", tokenVerification, async (req, res) => {
 
     } catch (error) {
         return res.status(404).json({
-            error:true,
-            message:"Bir hata oluştu !"
+            error: true,
+            message: "Bir hata oluştu !"
         })
     }
 })
@@ -57,7 +57,11 @@ router.post("/register", async (req, res) => {
 
         return res.status(201).json({
             error: false,
-            newUser,
+            newUser:{
+                fullName : newUser.fullName,
+                email : newUser.email,
+                updatedAt : newUser.updatedAt
+            },
             accesToken,
             message: "Kullanıcı hesabı oluşturuldu !"
         })
@@ -89,22 +93,21 @@ router.post("/login", async (req, res) => {
             return res.status(201).json({
                 error: false,
                 message: "Giriş Başarılı",
-                userInfo:{
-                    fullName : userInfo.fullName,
-                    email : userInfo.email,
-                    updatedAt : userInfo.updatedAt,
-                    _id : userInfo._id 
+                userInfo: {
+                    fullName: userInfo.fullName,
+                    email: userInfo.email,
+                    createdAt: userInfo.createdAt,
+                    _id: userInfo._id
                 },
                 accesToken
             })
         }
-        if(userInfo.email === email && !passwordMatch)
-            {
-                return res.status(400).json({
-                    error:true,
-                    message:"Şifre yanlış !"
-                })
-            }
+        if (userInfo.email === email && !passwordMatch) {
+            return res.status(400).json({
+                error: true,
+                message: "Şifre yanlış !"
+            })
+        }
     } catch (error) {
         console.log(error);
         return res.status(404).json({ message: "Bir hata oluştu !" })

@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import PasswordInput from '../components/PasswordInput'
+import PasswordInput from '../components/Inputs/PasswordInput'
 import { loginPost } from "../services"
 import { validateEmail } from "../utils/helper"
 import { useDispatch } from "react-redux"
 import { userLogin } from "../redux/userSlice"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, NavLink } from "react-router-dom"
 import { ThreeDots } from "react-loader-spinner"
 import { Toaster, toast } from "sonner"
+import Navbar from '../components/Navbar/Navbar'
 
 const Login = () => {
 
@@ -48,54 +49,66 @@ const Login = () => {
     }
     return (
         <>
+
             <Toaster
                 duration={2000}
                 position='top-center'
                 closeButton
                 richColors />
-            <div className='login-page min-h-screen w-full flex justify-center items-center'>
-                <div className='border border-gray-300 p-4 backdrop-blur-lg rounded md:w-[50%] md:flex md:flex-col md:items-center '>
-                    <form className='md:w-[80%] ' onSubmit={handleSubmit}>
-                        <h1 className='text-center text-3xl font-semibold mb-5 md:text-4xl text-gray-100'>Login</h1>
-                        <div className='flex items-center border-b  bg-transparent px-5 rounded my-6 text-white font-semibold'>
-                            <input
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                                className='input'
-                                type="text"
-                                name=""
-                                id=""
-                                placeholder='Email' />
-                        </div>
+            <div className='flex flex-col min-h-screen'>
+                <Navbar />
+                <div className='login-page flex-1 flex justify-center items-center '>
+                    <div className='border border-gray-300 p-4 backdrop-blur-lg rounded md:w-[50%] md:flex md:flex-col md:items-center '>
+                        <form className='md:w-[80%] ' onSubmit={handleSubmit}>
+                            <h1 className='text-center text-3xl font-semibold mb-5 md:text-4xl text-gray-100'>Login</h1>
+                            <div className='flex items-center border-b  bg-transparent px-5 rounded my-6 text-white font-semibold'>
+                                <input
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
+                                    className='input'
+                                    type="text"
+                                    name=""
+                                    id=""
+                                    placeholder='Email' />
+                            </div>
 
-                        <PasswordInput
-                            value={password}
-                            onChange={e => setPassword(e.target.value)} />
+                            <PasswordInput
+                                value={password}
+                                onChange={e => setPassword(e.target.value)} />
 
-                        {error && <div className='text-red-400 font-semibold text-xs md:text-sm text-center'>{error}</div>}
+                            {error && <div className='text-red-400 font-semibold text-xs md:text-sm text-center'>{error}</div>}
 
-                        <div className='text-center'>
-                            <button
-                                type='submit'
-                                className='button flex justify-center items-center'>
-                                {
-                                    loader ? (
-                                        <ThreeDots
-                                            visible={true}
-                                            height="24"
-                                            width="24"
-                                            color="white"
-                                            radius="9"
-                                            ariaLabel="three-dots-loading" />
-                                    ) : (
-                                        <span>Giriş Yap</span>
-                                    )
-                                }
-                            </button>
-                        </div>
+                            <div className='text-center'>
+                                <button
+                                    type='submit'
+                                    className='button flex justify-center items-center'>
+                                    {
+                                        loader ? (
+                                            <ThreeDots
+                                                visible={true}
+                                                height="24"
+                                                width="24"
+                                                color="white"
+                                                radius="9"
+                                                ariaLabel="three-dots-loading" />
+                                        ) : (
+                                            <span>Giriş Yap</span>
+                                        )
+                                    }
+                                </button>
+                            </div>
+                            <div className='flex gap-x-4 text-sm md:text-base justify-center text-white md:justify-start '>
+                                <p className='md:text-gray-800'>Bir hesabınız yok mu ?</p>
+                                <NavLink
+                                    className="underline underline-offset-2
+                             hover:text-blue-400"
+                                    to="/sign-up">
+                                    Kayıt Ol
+                                </NavLink>
+                            </div>
+                        </form>
 
-                    </form>
-
+                    </div>
                 </div>
             </div>
         </>

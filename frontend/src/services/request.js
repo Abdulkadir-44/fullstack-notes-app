@@ -1,10 +1,15 @@
 function request(url, data = false, method = "GET") {
-
+    
     return new Promise(async (resolve, reject) => {
         const options = {
-            method
+            method,
+            headers: {
+                'Content-Type': 'application/json'
+            }
         }
-
+        if (data && method === "POST") {
+            options.body = JSON.stringify(data);
+        }
         try {
             const response = await fetch(url, options);
             const result = await response.json();
