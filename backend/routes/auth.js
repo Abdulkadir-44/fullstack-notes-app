@@ -86,13 +86,25 @@ router.post("/login", async (req, res) => {
 
         if (userInfo.email === email && passwordMatch) {
             const accesToken = jwt.sign({ userId: userInfo._id, email: userInfo.email }, process.env.JWT_SECRET, { expiresIn: "2h" })
-            return res.json({
+            return res.status(201).json({
                 error: false,
                 message: "Giriş Başarılı",
-                email,
+                userInfo:{
+                    fullName : userInfo.fullName,
+                    email : userInfo.email,
+                    updatedAt : userInfo.updatedAt,
+                    _id : userInfo._id 
+                },
                 accesToken
             })
         }
+        if(userInfo.email === email && !passwordMatch)
+            {
+                return res.status(400).json({
+                    error:true,
+                    message:"Şifre yanlış !"
+                })
+            }
     } catch (error) {
         console.log(error);
         return res.status(404).json({ message: "Bir hata oluştu !" })

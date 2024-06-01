@@ -1,3 +1,3 @@
 import {post} from "./request"
 
-export const loginPost = (data)=>post("http://localhost:3000/api/auth/login",data)
+export const loginPost = (data)=>post(`${import.meta.env.VITE_REACT_API_URL}/api/auth/login`,data)
