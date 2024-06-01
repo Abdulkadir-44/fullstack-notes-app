@@ -5,20 +5,18 @@ function request(url, data = false, method = "GET") {
             method
         }
 
-        if (data && method === "POST") {
-            options.body = JSON.stringify(data)
-            options.headers = {
-                "Content-Type": "application/json"
-            }
-        }
-        
-        const response = await fetch(url, options)
-        const result = await response.json()
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
 
-        if (response.ok) {
-            resolve(result)
-        } else {
-            reject(result)
+            if (response.ok) {
+                resolve(result);
+            } else {
+                reject(result);
+            }
+        } catch (error) {
+            // Ağ hatası veya beklenmedik bir hata durumunda yakala
+            reject({ message: 'Sunucu hatası !', error });
         }
 
     })

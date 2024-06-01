@@ -25,7 +25,7 @@ const Login = () => {
         }
 
         if (!password) {
-            setError("Şifre zorunlu")
+            setError("Şifre zorunlu !")
             return;
         }
 
@@ -54,9 +54,9 @@ const Login = () => {
                 closeButton
                 richColors />
             <div className='login-page min-h-screen w-full flex justify-center items-center'>
-                <div className='border border-gray-300 p-4 backdrop-blur-lg rounded'>
-                    <form onSubmit={handleSubmit}>
-                        <h1 className='text-center text-3xl font-semibold mb-5 text-gray-100'>Login</h1>
+                <div className='border border-gray-300 p-4 backdrop-blur-lg rounded md:w-[50%] md:flex md:flex-col md:items-center '>
+                    <form className='md:w-[80%] ' onSubmit={handleSubmit}>
+                        <h1 className='text-center text-3xl font-semibold mb-5 md:text-4xl text-gray-100'>Login</h1>
                         <div className='flex items-center border-b  bg-transparent px-5 rounded my-6 text-white font-semibold'>
                             <input
                                 value={email}
@@ -71,7 +71,9 @@ const Login = () => {
                         <PasswordInput
                             value={password}
                             onChange={e => setPassword(e.target.value)} />
-                        {error && <div className='text-red-300 text-xs text-center'>{error}</div>}
+
+                        {error && <div className='text-red-400 font-semibold text-xs md:text-sm text-center'>{error}</div>}
+
                         <div className='text-center'>
                             <button
                                 type='submit'
@@ -93,6 +95,7 @@ const Login = () => {
                         </div>
 
                     </form>
+
                 </div>
             </div>
         </>
