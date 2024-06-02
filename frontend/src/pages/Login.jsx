@@ -53,7 +53,7 @@ const Login = () => {
 
             <div className='flex flex-col min-h-screen'>
                 <Navbar />
-                <div className='bg-gradient-to-r from-indigo-400 to-purple-400 flex-1 flex justify-center items-center '>
+                <div className='bg-gradient-to-r from-indigo-500 to-purple-500 flex-1 flex justify-center items-center '>
                     <div className='border border-slate-400 shadow-2xl  p-4 backdrop-blur-lg rounded md:w-[50%] md:flex md:flex-col md:items-center '>
                         <form className='md:w-[80%] ' onSubmit={handleSubmit}>
                             <h1 className='text-center text-3xl font-semibold mb-5 md:text-4xl text-gray-100'>Login</h1>
