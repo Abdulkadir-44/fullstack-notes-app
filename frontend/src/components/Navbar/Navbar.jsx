@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import SearchBar from '../Inputs/SearchBar'
 import ProfileInfo from '../Profile/ProfileInfo'
 
-const Navbar = ({ value, onChange, onClearSearch }) => {
+const Navbar = ({isNotes}) => {
     const user = useSelector(state => state.user.user)
 
     return (
@@ -15,7 +15,8 @@ const Navbar = ({ value, onChange, onClearSearch }) => {
                 user && (
                     <>
                         <div className='md:block hidden'>
-                            <SearchBar value={value} onChange={onChange} oncClearSearch={onClearSearch} />
+                            <SearchBar 
+                            isNotes = {isNotes} />
                         </div>
                         <div>
                             <ProfileInfo />

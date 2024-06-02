@@ -14,7 +14,7 @@ function request(url, data = false, method = "GET") {
         if (parsedUser) {
             const token = parsedUser.accesToken
             options.headers.Authorization = `Bearer ${token}`;
-        } 
+        }
         if (data && method === "POST") {
             options.body = JSON.stringify(data);
         }
