@@ -22,7 +22,7 @@ const SignUp = () => {
 
     if (!fullName) {
       setError("Lütfen Ad-Soyad girin !")
-      return ;
+      return;
     }
     if (!validateEmail(email)) {
       setError("Lütfen geçerli bir mail girin !")
@@ -33,7 +33,7 @@ const SignUp = () => {
       setError("Şifre zorunlu !")
       return;
     }
-  
+
     setError('')
     setLoader(true)
     signUpPost({ fullName, email, password })
@@ -41,7 +41,7 @@ const SignUp = () => {
         setLoader(false)
         console.log(data);
         toast.success(data.message)
-        navigate("/login",{replace:true})
+        navigate("/login", { replace: true })
       })
       .catch(err => {
         setLoader(false)
@@ -54,15 +54,15 @@ const SignUp = () => {
   return (
     <>
 
-      <Toaster
+      {/* <Toaster
         duration={2000}
         position='top-center'
         closeButton
-        richColors />
+        richColors /> */}
       <div className='flex flex-col min-h-screen'>
         <Navbar />
         <div className='bg-gradient-to-r from-indigo-500 to-purple-500 flex-1 flex justify-center items-center '>
-          <div className='border border-gray-300 p-4 backdrop-blur-lg rounded md:w-[50%] md:flex md:flex-col md:items-center '>
+          <div className='border border-slate-400  p-4 backdrop-blur-lg rounded md:w-[50%] md:flex md:flex-col md:items-center '>
             <form className='md:w-[80%] ' onSubmit={handleSubmit}>
               <h1 className='text-center text-3xl font-semibold mb-5 md:text-4xl text-gray-100'>Sign Up</h1>
 

@@ -1,11 +1,16 @@
 import React from 'react'
-import {BrowserRouter as Router} from "react-router-dom"
-import {AppRouter} from './routes/AppRouter'
-
+import { BrowserRouter as Router } from "react-router-dom"
+import { AppRouter } from './routes/AppRouter'
+import { Toaster } from "sonner"
 const App = () => {
   return (
     <Router>
-      <AppRouter/>
+      <Toaster
+        duration={2000}
+        position='bottom-right'
+        closeButton
+        richColors />
+      <AppRouter />
     </Router>
   )
 }
