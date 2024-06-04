@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from '../components/Navbar/Navbar'
-import SearchBar from '../components/Inputs/SearchBar'
-import { getAllNotes } from "../services"
-import NoteCard from '@/components/Cards/NoteCard'
+import Navbar from '../../components/Navbar/Navbar'
+import SearchBar from '../../components/Inputs/SearchBar'
+import { getAllNotes } from "../../services"
 import { MdAdd } from "react-icons/md"
 import { useSelector } from "react-redux"
 import Modal from "react-modal"
 import AddEditNotes from '@/components/Notes/AddEditNotes'
+import { NoMatchingNotesMessage } from "./NoMatchingNotesMessage"
+import { NoNotesMessage } from "./NoNotesMessage"
+import { NotesGrid } from "./NotesGrid"
+import { LoadingMessage } from "./Loading"
 
+
+
+//program kapandığında eğer login olmaz ise ne kadar süre geçerse geçsin user localstorage'da olduğundan panele giriyor ama token süresi dolduğundan işlem yapılamıyor
 const Home = () => {
 
+  const [loader, setLoader] = useState(true)
   const searchTerm = useSelector(state => state.search.searchTerm)
   const [notes, setNotes] = useState([])
   const [filteredNotes, setFilteredNotes] = useState([])
@@ -20,16 +27,20 @@ const Home = () => {
   })
 
   useEffect(() => {
-    console.log("api isteği");
-    getAllNotes()
-      .then(data => {
-        setNotes(data.notes)
-      })
-      .catch(err => console.log("catch hatası : ", err))
+    setLoader(true)
+     getAllNotes()
+       .then(data => {
+         setNotes(data.notes)
+         setLoader(false)
+       })
+       .catch(err => {
+         console.log("catch hatası : ", err)
+         setLoader(false)
+       })
   }, [])
 
   useEffect(() => {
-    console.log("deneme");
+
     const timeOut = setTimeout(() => {
       const filtered = notes.filter((note) => note.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()))
       setFilteredNotes(filtered)
@@ -40,8 +51,13 @@ const Home = () => {
     }
   }, [searchTerm])
 
-  console.log("notes", notes);
-  console.log("filteredNotes", filteredNotes);
+
+  const noNotes = !loader && notes.length === 0 ;
+  const notesExist = !loader && notes.length > 0 ;
+  const noFilteredNotes = filteredNotes.length === 0 ;
+  const filteredNotesExist = filteredNotes.length > 0 ;
+  // console.log("notes", notes);
+  // console.log("filteredNotes", filteredNotes);
   return (
     <>
       <div className='flex flex-col relative min-h-screen bg-slate-300'>
@@ -57,7 +73,25 @@ const Home = () => {
             <MdAdd className='text-[32px] text-white' />
           </button>
         </div>
-        {
+        <div className='mb-14 lg:mb-16'>
+        {loader && <LoadingMessage/>}
+        {noNotes && <NoNotesMessage/>}
+        {notesExist && noFilteredNotes && (
+          <>
+            {
+              !searchTerm ? (
+                <NotesGrid notes={notes}/>
+              ):(
+                <NoMatchingNotesMessage/>
+              )
+            }
+          </>
+        )}
+        {notesExist && filteredNotesExist && (
+          <NotesGrid notes={filteredNotes}/>
+        ) }
+        </div>
+        {/* {
           notes.length === 0 && (
             <div className='container w-[87%] mx-auto md:mt-4 bg-yellow-300'>
               Not yok aga
@@ -107,7 +141,7 @@ const Home = () => {
               }
             </div>
           )
-        }
+        } */}
 
         <button
           onClick={() => {

@@ -51,7 +51,7 @@ router.delete("/delete-note/:id", tokenVerification, async (req, res) => {
 //GET ALL NOTES
 router.get("/get-all-notes", tokenVerification, async (req, res) => {
     try {
-        console.log(req.body);
+        
         const userId = req.user.userId || req.user._id
 
         const notes = await Note.find({ user: userId }).sort({ createdAt: -1 })
