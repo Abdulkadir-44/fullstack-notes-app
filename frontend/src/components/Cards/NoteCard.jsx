@@ -10,7 +10,7 @@ const NoteCard = ({ title, date, content, tags = [], onEdit, onDelete }) => {
 
             <div className='flex items-center justify-between'>
                 <div>
-                    <h6 className='text-xl mb-1 ml-2 text-slate-200 font-semibold'>{title}</h6>
+                    <h6 className='text-xl mb-1 ml-2 text-white font-semibold'>{title}</h6>
                     <span className='text-xs font-semibold text-slate-300'>{convertToTurkishDate(date)}</span>
                 </div>
 

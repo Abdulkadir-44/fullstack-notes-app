@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import TagsInput from '../Inputs/TagsInput'
 import { MdClose } from 'react-icons/md'
 
 export default function AddEditNotes({ onClose, noteData, type }) {
@@ -10,8 +10,8 @@ export default function AddEditNotes({ onClose, noteData, type }) {
     const [error, setError] = useState(null)
 
 
-    const editNote = async ()=>{}
-    const addNewNote = async ()=>{}
+    const editNote = async () => { }
+    const addNewNote = async () => { }
 
     const handleAddNote = () => {
         if (!title) {
@@ -24,54 +24,50 @@ export default function AddEditNotes({ onClose, noteData, type }) {
         }
         setError("")
 
-        if(type === "edit")
+        if (type === "edit")
             editNote()
-        else
+        else    
             addNewNote()
 
-        //api çağrısı olcak
     }
 
     return (
         <div className='relative'>
             <button
                 onClick={onClose}
-                className='absolute right-2 flex justify-center items-center rounded p-1 bg-red-500 hover:bg-red-600 transition-all'>
+                className='absolute right-0 -top-1 flex justify-center items-center rounded p-1 bg-red-500 hover:bg-red-600 transition-all'>
                 <MdClose className='text-white text-xl' />
             </button>
 
-            <div className='flex flex-col gap-2'>
-                <label className='input-label' >TITLE</label>
+            <div className='flex flex-col gap-2 pt-10'>
                 <input
                     value={title}
                     onChange={({ target }) => setTitle(target.value)}
                     type="text"
-                    className='text-2xl text-slate-950 border-b outline-none'
-                    placeholder='Deneme baba deneeme' />
+                    className='text-base p-2 rounded bg-transparent text-white  border-b outline-none placeholder:italic placeholder:text-slate-300'
+                    placeholder='Başlık' />
             </div>
 
             <div className='flex flex-col gap-2 mt-4'>
-                <label className='input-label'>CONTENT</label>
                 <textarea
                     value={content}
                     onChange={({ target }) => setContent(target.value)}
                     typeof='text'
                     placeholder='Content'
                     rows={10}
-                    className='text-sm resize-none overflow-y-scroll text-slate-950 outline-none bg-slate-100 p-2 rounded' ></textarea>
+                    className='text-sm resize-none overflow-y-auto text-slate-950 outline-none bg-slate-200 p-2 rounded placeholder:italic placeholder:text-base' ></textarea>
             </div>
 
-            {/* <div className='mt-3'>
-                <label className='input-label' >TAGS</label>
+            <div className='mt-3'>
                 <TagsInput tags={tags} setTags={setTags} />
-            </div> */}
+            </div>
 
             {error && <p className='text-xs text-red-600 pt-4'>{error}</p>}
 
             <button
                 onClick={handleAddNote}
-                className='btn-primary font-medium mt-5 p-3'>
-                ADD
+                className='button font-medium mt-5 p-3'>
+                Not ekle
             </button>
         </div>
     )

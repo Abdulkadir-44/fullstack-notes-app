@@ -13,6 +13,7 @@ import { LoadingMessage } from "./Loading"
 
 
 
+
 //program kapandığında eğer login olmaz ise ne kadar süre geçerse geçsin user localstorage'da olduğundan panele giriyor ama token süresi dolduğundan işlem yapılamıyor
 const Home = () => {
 
@@ -26,23 +27,28 @@ const Home = () => {
     data: null,
   })
 
+  console.log(openAddEditModal);
   useEffect(() => {
     setLoader(true)
-     getAllNotes()
-       .then(data => {
-         setNotes(data.notes)
-         setLoader(false)
-       })
-       .catch(err => {
-         console.log("catch hatası : ", err)
-         setLoader(false)
-       })
+    getAllNotes()
+      .then(data => {
+        setNotes(data.notes)
+        setLoader(false)
+      })
+      .catch(err => {
+        console.log("catch hatası : ", err)
+        setLoader(false)
+      })
   }, [])
 
   useEffect(() => {
 
     const timeOut = setTimeout(() => {
-      const filtered = notes.filter((note) => note.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()))
+      const filtered = notes.filter((note) => {
+        const normalizedTitle = note.title.toLocaleLowerCase().replace(/\s+/g, '');
+        const normalizedSearchTerm = searchTerm.toLocaleLowerCase().replace(/\s+/g, '');
+        return normalizedTitle.includes(normalizedSearchTerm);
+      })
       setFilteredNotes(filtered)
     }, 300)
 
@@ -52,10 +58,10 @@ const Home = () => {
   }, [searchTerm])
 
 
-  const noNotes = !loader && notes.length === 0 ;
-  const notesExist = !loader && notes.length > 0 ;
-  const noFilteredNotes = filteredNotes.length === 0 ;
-  const filteredNotesExist = filteredNotes.length > 0 ;
+  const noNotes = !loader && notes.length === 0;
+  const notesExist = !loader && notes.length > 0;
+  const noFilteredNotes = filteredNotes.length === 0;
+  const filteredNotesExist = filteredNotes.length > 0;
   // console.log("notes", notes);
   // console.log("filteredNotes", filteredNotes);
   return (
@@ -69,98 +75,61 @@ const Home = () => {
             isNotes={notes.length > 0 ? true : false} />
 
           <button
+            onClick={() => {
+              setOpenAddEditModal({ isShown: true, type: "ADD", data: null });
+            }}
             className='w-14 h-9 flex items-center bg-gradient-to-r from-purple-600 to-indigo-600 justify-center rounded'>
             <MdAdd className='text-[32px] text-white' />
           </button>
         </div>
-        <div className='mb-14 lg:mb-16'>
-        {loader && <LoadingMessage/>}
-        {noNotes && <NoNotesMessage/>}
-        {notesExist && noFilteredNotes && (
-          <>
-            {
-              !searchTerm ? (
-                <NotesGrid notes={notes}/>
-              ):(
-                <NoMatchingNotesMessage/>
-              )
-            }
-          </>
-        )}
-        {notesExist && filteredNotesExist && (
-          <NotesGrid notes={filteredNotes}/>
-        ) }
-        </div>
-        {/* {
-          notes.length === 0 && (
-            <div className='container w-[87%] mx-auto md:mt-4 bg-yellow-300'>
-              Not yok aga
+        <div className='mb-20  flex-1'>
+          {loader && (
+            <div className='flex justify-center items-center h-[332px] md:h-[507px]'>
+              <LoadingMessage />
             </div>
-          )
-        }
-        {
-          (notes.length > 0 && filteredNotes.length === 0) && (
+          )}
+          {noNotes && (
+            <div className='flex justify-center items-center h-[332px] md:h-[507px]'>
+              <NoNotesMessage />
+            </div>
+          )}
+          {notesExist && noFilteredNotes && (
             <>
               {
                 !searchTerm ? (
-                  <div className='my-5 container mx-auto grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 '>
-                    {
-                      notes.map((note) => (
-                        <NoteCard
-                          key={note._id}
-                          content={note.content}
-                          title={note.title}
-                          tags={note.tags}
-                          date={note.createdAt}
-                        />
-                      ))
-                    }
-                  </div>
+                  <NotesGrid notes={notes} />
                 ) : (
-                  <div className='container w-[87%] mx-auto md:mt-4 bg-yellow-300'>
-                    Eşleşen öge yok aga
+                  <div className='flex justify-center items-center h-[332px] md:h-[507px]'>
+                    <NoMatchingNotesMessage />
                   </div>
                 )
               }
             </>
-          )
-        }
-        {
-          (notes.length > 0 && filteredNotes.length > 0) && (
-            <div className='my-5 container mx-auto grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 '>
-              {
-                filteredNotes.map((note) => (
-                  <NoteCard
-                    key={note._id}
-                    content={note.content}
-                    title={note.title}
-                    tags={note.tags}
-                    date={note.createdAt}
-                  />
-                ))
-              }
-            </div>
-          )
-        } */}
+          )}
+          {notesExist && filteredNotesExist && (
+            <NotesGrid notes={filteredNotes} />
+          )}
+        </div>
 
         <button
           onClick={() => {
             setOpenAddEditModal({ isShown: true, type: "ADD", data: null });
           }}
-          className='max-md:hidden w-14 h-9 flex absolute bottom-6 right-6 lg:bottom-10 lg:right-10 items-center bg-gradient-to-r from-purple-600 to-indigo-600 justify-center rounded '>
+          className='max-md:hidden w-14 h-12 flex absolute bottom-6 right-6 lg:bottom-10 lg:right-10 items-center bg-gradient-to-r from-purple-600 to-indigo-600 justify-center rounded '>
           <MdAdd className='text-[32px] text-white' />
         </button>
 
         <Modal
+          appElement={document.getElementById("root")}
           isOpen={openAddEditModal.isShown}
-          onRequestClose={() => { }}
+          onRequestClose={() => { setOpenAddEditModal({ isShown: false, type: "add", data: null }) }}
           style={{
             overlay: {
-              backgroundColor: "rgba(0,0,0,0.2)",
+              backgroundColor: "rgba(0,0,0,0.6)",
             },
           }}
-          contentLabel=''
-          className="w-[40%] max-h-3/4 bg-white rounded-md mx-auto mt-14 p-5"
+          contentLabel='My modal'
+          className="w-[80%] md:w-[60%] lg:w-[45%] max-h-3/4 bg-gradient-to-r from-purple-900 to-indigo-800 rounded-md mx-auto mt-14 p-3"
         >
 
           <AddEditNotes
@@ -230,5 +199,58 @@ export default Home
           )
         }
 
+
+
+  {
+          notes.length === 0 && (
+            <div className='container w-[87%] mx-auto md:mt-4 bg-yellow-300'>
+              Not yok aga
+            </div>
+          )
+        }
+        {
+          (notes.length > 0 && filteredNotes.length === 0) && (
+            <>
+              {
+                !searchTerm ? (
+                  <div className='my-5 container mx-auto grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 '>
+                    {
+                      notes.map((note) => (
+                        <NoteCard
+                          key={note._id}
+                          content={note.content}
+                          title={note.title}
+                          tags={note.tags}
+                          date={note.createdAt}
+                        />
+                      ))
+                    }
+                  </div>
+                ) : (
+                  <div className='container w-[87%] mx-auto md:mt-4 bg-yellow-300'>
+                    Eşleşen öge yok aga
+                  </div>
+                )
+              }
+            </>
+          )
+        }
+        {
+          (notes.length > 0 && filteredNotes.length > 0) && (
+            <div className='my-5 container mx-auto grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 '>
+              {
+                filteredNotes.map((note) => (
+                  <NoteCard
+                    key={note._id}
+                    content={note.content}
+                    title={note.title}
+                    tags={note.tags}
+                    date={note.createdAt}
+                  />
+                ))
+              }
+            </div>
+          )
+        } 
 
 */
