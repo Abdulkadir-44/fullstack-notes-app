@@ -84,7 +84,7 @@ const Login = () => {
                                                 visible={true}
                                                 height="24"
                                                 width="24"
-                                                color="white"
+                                                color="#432B93"
                                                 radius="9"
                                                 ariaLabel="three-dots-loading" />
                                         ) : (

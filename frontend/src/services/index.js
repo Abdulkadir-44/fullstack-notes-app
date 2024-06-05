@@ -1,8 +1,10 @@
 import {loginPost} from "./loginService"
 import {signUpPost} from "./signUpService"
-import {getAllNotes} from "./notesService"
+import {getAllNotes,addNote,deleteNote} from "./notesService"
 export {
     loginPost,
     signUpPost,
-    getAllNotes
+    getAllNotes,
+    addNote,
+    deleteNote
 }

@@ -34,7 +34,7 @@ const TagsInput = ({ tags, setTags }) => {
                     <div className='flex rounded items-center gap-2 text-xs flex-wrap mt-2 h-20 overflow-y-auto'>
                         {
                             tags.map((tag, index) => (
-                                <span key={index} className='flex items-center p-1 rounded bg-slate-300'>
+                                <span key={index} className='flex items-center font-semibold  p-1 rounded bg-slate-300'>
                                     # {tag}
                                     <button
                                         className='text-white text-xl ml-2 bg-red-600 rounded'

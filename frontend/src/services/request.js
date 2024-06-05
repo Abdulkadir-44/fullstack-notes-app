@@ -19,6 +19,7 @@ function request(url, data = false, method = "GET") {
             options.body = JSON.stringify(data);
         }
         try {
+            console.log(options);
             const response = await fetch(url, options);
             const result = await response.json();
 
@@ -37,3 +38,4 @@ function request(url, data = false, method = "GET") {
 
 export const post = (url, data) => request(url, data, "POST")
 export const get = (url) => request(url)
+export const del = (url) => request(url, false, "DELETE")

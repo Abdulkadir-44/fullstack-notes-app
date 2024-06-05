@@ -1,21 +1,41 @@
 import React, { useState } from 'react'
 import TagsInput from '../Inputs/TagsInput'
 import { MdClose } from 'react-icons/md'
-
+import { addNote } from "../../services/index"
+import { ThreeDots } from "react-loader-spinner"
+import { toast } from "sonner"
 export default function AddEditNotes({ onClose, noteData, type }) {
 
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [tags, setTags] = useState([])
     const [error, setError] = useState(null)
+    const [loader, setLoader] = useState(false)
 
-
-    const editNote = async () => { }
-    const addNewNote = async () => { }
+    const editNotes = async () => { }
+    const deleteNotes = async () =>{
+        
+    }
+    const addNewNote = async () => {
+        setLoader(true)
+        addNote({ title, content, tags })
+            .then(res => {
+                console.log(res)
+                setLoader(false)
+                onClose()
+                toast.success(res.message)
+                window.location.reload()
+            })
+            .catch(err => {
+                console.log(err)
+                setLoader(false)
+                toast.error(err.message)
+            })
+    }
 
     const handleAddNote = () => {
         if (!title) {
-            setError("Please enter the title")
+            setError("Lütfen başlık giriniz !")
             return;
         }
         if (!content) {
@@ -26,7 +46,7 @@ export default function AddEditNotes({ onClose, noteData, type }) {
 
         if (type === "edit")
             editNote()
-        else    
+        else
             addNewNote()
 
     }
@@ -62,12 +82,22 @@ export default function AddEditNotes({ onClose, noteData, type }) {
                 <TagsInput tags={tags} setTags={setTags} />
             </div>
 
-            {error && <p className='text-xs text-red-600 pt-4'>{error}</p>}
+            {error && <p className='text-xs text-red-500 pt-4'>{error}</p>}
 
             <button
                 onClick={handleAddNote}
-                className='button font-medium mt-5 p-3'>
-                Not ekle
+                className='button font-medium mt-5 p-3 flex justify-center items-center'>
+                {
+                    loader ? (
+                        <ThreeDots
+                            visible={true}
+                            height="24"
+                            width="24"
+                            color="#432B93"
+                            radius="9"
+                            ariaLabel="three-dots-loading" />
+                    ) : <>Not ekle</>
+                }
             </button>
         </div>
     )
