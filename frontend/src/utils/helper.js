@@ -28,3 +28,19 @@ export const convertToTurkishDate = (createdAt) => {
 
     return formattedDate;
 };
+
+export const normalizeString = (str) => {
+    return str
+      .replace(/[\u0130]/g, 'i')   // İ => i
+      .replace(/[\u0131]/g, 'i')   // ı => i
+      .replace(/[\u015E]/g, 's')   // Ş => s
+      .replace(/[\u015F]/g, 's')   // ş => s
+      .replace(/[\u00C7]/g, 'c')   // Ç => c
+      .replace(/[\u00E7]/g, 'c')   // ç => c
+      .replace(/[\u00D6]/g, 'o')   // Ö => o
+      .replace(/[\u00F6]/g, 'o')   // ö => o
+      .replace(/[\u00DC]/g, 'u')   // Ü => u
+      .replace(/[\u00FC]/g, 'u')   // ü => u
+      .toLowerCase()
+      .replace(/\s+/g, '');
+  };

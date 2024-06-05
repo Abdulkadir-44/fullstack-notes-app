@@ -10,7 +10,7 @@ import { NoMatchingNotesMessage } from "./NoMatchingNotesMessage"
 import { NoNotesMessage } from "./NoNotesMessage"
 import { NotesGrid } from "./NotesGrid"
 import { LoadingMessage } from "./Loading"
-
+import { normalizeString } from "../../utils/helper"
 
 
 
@@ -27,7 +27,7 @@ const Home = () => {
     data: null,
   })
 
-  console.log(openAddEditModal);
+
   useEffect(() => {
     setLoader(true)
     getAllNotes()
@@ -45,8 +45,9 @@ const Home = () => {
 
     const timeOut = setTimeout(() => {
       const filtered = notes.filter((note) => {
-        const normalizedTitle = note.title.toLocaleLowerCase().replace(/\s+/g, '');
-        const normalizedSearchTerm = searchTerm.toLocaleLowerCase().replace(/\s+/g, '');
+        const normalizedTitle = normalizeString(note.title)
+        const normalizedSearchTerm = normalizeString(searchTerm)
+
         return normalizedTitle.includes(normalizedSearchTerm);
       })
       setFilteredNotes(filtered)
@@ -57,11 +58,11 @@ const Home = () => {
     }
   }, [searchTerm])
 
-
   const noNotes = !loader && notes.length === 0;
   const notesExist = !loader && notes.length > 0;
   const noFilteredNotes = filteredNotes.length === 0;
   const filteredNotesExist = filteredNotes.length > 0;
+
   // console.log("notes", notes);
   // console.log("filteredNotes", filteredNotes);
   return (
