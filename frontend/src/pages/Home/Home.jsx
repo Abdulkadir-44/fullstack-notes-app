@@ -5,7 +5,7 @@ import { getAllNotes } from "../../services"
 import { MdAdd } from "react-icons/md"
 import { useSelector } from "react-redux"
 import Modal from "react-modal"
-import AddEditNotes from '@/components/Notes/AddEditNotes'
+import AddNotes from '@/components/Notes/AddNotes'
 import { NoMatchingNotesMessage } from "./NoMatchingNotesMessage"
 import { NoNotesMessage } from "./NoNotesMessage"
 import { NotesGrid } from "./NotesGrid"
@@ -23,7 +23,6 @@ const Home = () => {
   const [filteredNotes, setFilteredNotes] = useState([])
   const [openAddEditModal, setOpenAddEditModal] = useState({
     isShown: false,
-    type: "add",
     data: null,
   })
 
@@ -77,7 +76,7 @@ const Home = () => {
 
           <button
             onClick={() => {
-              setOpenAddEditModal({ isShown: true, type: "ADD", data: null });
+              setOpenAddEditModal({ isShown: true, data: null });
             }}
             className='w-14 h-9 flex items-center bg-gradient-to-r from-purple-600 to-indigo-600 justify-center rounded'>
             <MdAdd className='text-[32px] text-white' />
@@ -98,7 +97,7 @@ const Home = () => {
             <>
               {
                 !searchTerm ? (
-                  <NotesGrid notes={notes} />
+                  <NotesGrid notes={notes}  />
                 ) : (
                   <div className='flex justify-center items-center h-[332px] md:h-[507px]'>
                     <NoMatchingNotesMessage />
@@ -114,7 +113,7 @@ const Home = () => {
 
         <button
           onClick={() => {
-            setOpenAddEditModal({ isShown: true, type: "ADD", data: null });
+            setOpenAddEditModal({ isShown: true, data: null });
           }}
           className='max-md:hidden w-14 h-12 flex absolute bottom-6 right-6 lg:bottom-10 lg:right-10 items-center bg-gradient-to-r from-purple-600 to-indigo-600 justify-center rounded '>
           <MdAdd className='text-[32px] text-white' />
@@ -123,21 +122,21 @@ const Home = () => {
         <Modal
           appElement={document.getElementById("root")}
           isOpen={openAddEditModal.isShown}
-          onRequestClose={() => { setOpenAddEditModal({ isShown: false, type: "add", data: null }) }}
+          onRequestClose={() => { setOpenAddEditModal({ isShown: false, data: null }) }}
           style={{
             overlay: {
               backgroundColor: "rgba(0,0,0,0.6)",
             },
           }}
           contentLabel='My modal'
-          className="w-[80%] md:w-[60%] lg:w-[45%] max-h-3/4 bg-gradient-to-r from-purple-900 to-indigo-800 rounded-md mx-auto mt-14 p-3"
+          className="w-[80%] outline-none md:w-[60%] lg:w-[45%] max-h-3/4 bg-gradient-to-r from-purple-900 to-indigo-800 rounded-md mx-auto mt-14 p-3"
         >
 
-          <AddEditNotes
+          <AddNotes
             type={openAddEditModal.type}
             noteData={openAddEditModal.data}
             onClose={() => {
-              setOpenAddEditModal({ isShown: false, type: "add", data: null })
+              setOpenAddEditModal({ isShown: false, data: null })
             }} />
 
         </Modal>

@@ -7,7 +7,7 @@ const App = () => {
     <Router>
       <Toaster
         duration={2000}
-        position='bottom-left'
+        position='top-right'
         closeButton
         richColors />
       <AppRouter />

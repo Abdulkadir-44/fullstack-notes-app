@@ -1,30 +1,32 @@
 import React, { useState } from 'react'
 import TagsInput from '../Inputs/TagsInput'
 import { MdClose } from 'react-icons/md'
-import { addNote } from "../../services/index"
+import { editNote } from "../../services/index"
 import { ThreeDots } from "react-loader-spinner"
 import { toast } from "sonner"
-export default function AddEditNotes({ onClose, noteData, type }) {
 
-    const [title, setTitle] = useState('')
-    const [content, setContent] = useState('')
-    const [tags, setTags] = useState([])
+//hadnlenote fonksiyonunu prop olarak geçeriz 
+export default function AddNotes({ onClose,note }) {
+
+    const [title, setTitle] = useState(note.title)
+    const [content, setContent] = useState(note.content)
+    const [tags, setTags] = useState(note.tags)
     const [error, setError] = useState(null)
     const [loader, setLoader] = useState(false)
 
-    const editNotes = async () => { }
-    const deleteNotes = async () =>{
-        
-    }
+    
     const addNewNote = async () => {
         setLoader(true)
-        addNote({ title, content, tags })
+        
+        editNote(note._id,{ title, content, tags })
             .then(res => {
                 console.log(res)
                 setLoader(false)
                 onClose()
                 toast.success(res.message)
-                window.location.reload()
+                setTimeout(() => {
+                    window.location.reload()
+                }, 300);
             })
             .catch(err => {
                 console.log(err)
@@ -44,10 +46,7 @@ export default function AddEditNotes({ onClose, noteData, type }) {
         }
         setError("")
 
-        if (type === "edit")
-            editNote()
-        else
-            addNewNote()
+         addNewNote()
 
     }
 

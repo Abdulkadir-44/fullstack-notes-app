@@ -15,9 +15,10 @@ function request(url, data = false, method = "GET") {
             const token = parsedUser.accesToken
             options.headers.Authorization = `Bearer ${token}`;
         }
-        if (data && method === "POST") {
+        if (data && method === "POST" || method === "PUT" ) {
             options.body = JSON.stringify(data);
         }
+        
         try {
             console.log(options);
             const response = await fetch(url, options);
@@ -39,3 +40,4 @@ function request(url, data = false, method = "GET") {
 export const post = (url, data) => request(url, data, "POST")
 export const get = (url) => request(url)
 export const del = (url) => request(url, false, "DELETE")
+export const put = (url, data) => request(url, data, "PUT")
