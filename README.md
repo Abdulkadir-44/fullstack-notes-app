@@ -104,4 +104,4 @@ Projenizin çalışır durumda olduğunu doğrulamak için tarayıcınızda `htt
 Sorularınız için iletişim bilgileri:
 
 - **Email**: abdulkadirozenc5371@gmail.com
-- **GitHub**: [Abdulkadir-44](https://github.com/kullaniciadi)
+- **GitHub**: [Abdulkadir-44](https://github.com/Abdulkadiir-44)
