@@ -53,6 +53,7 @@ export default function AddNotes({ onClose,note }) {
     return (
         <div className='relative'>
             <button
+            aria-label='Pencereyi Kapat'
                 onClick={onClose}
                 className='absolute right-0 -top-1 flex justify-center items-center rounded p-1 bg-red-500 hover:bg-red-600 transition-all'>
                 <MdClose className='text-white text-xl' />
@@ -84,6 +85,7 @@ export default function AddNotes({ onClose,note }) {
             {error && <p className='text-xs text-red-500 pt-4'>{error}</p>}
 
             <button
+            aria-label='Ekle'
                 onClick={handleAddNote}
                 className='button font-medium mt-5 p-3 flex justify-center items-center'>
                 {

@@ -1,0 +1,7 @@
+User-agent: *  # Tüm arama motorları için geçerlidir
+
+# Tarama izin verilen dizinler
+Allow: /  # Ana dizin ve tüm içeriği
+
+# Özel dosyaları dışarıya kapatalım
+Disallow: /robots.txt  # robots.txt dosyasının taramasını engelle

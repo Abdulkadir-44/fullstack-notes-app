@@ -20,7 +20,6 @@ function request(url, data = false, method = "GET") {
         }
         
         try {
-            console.log(options);
             const response = await fetch(url, options);
             const result = await response.json();
 

@@ -1,5 +1,6 @@
 require("dotenv").config()
 const express = require("express")
+const path = require("path")
 const cors = require("cors")
 const mongoose = require("mongoose")
 
@@ -10,6 +11,8 @@ const PORT = 3000;
 
 const app = express()
 
+app.use(express.static(path.join(__dirname,"backend/public")))
+app.use(express.static(path.join(__dirname,"fontend/public")))
 app.use(express.json())
 app.use(
     cors({

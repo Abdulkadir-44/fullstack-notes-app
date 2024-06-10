@@ -37,6 +37,7 @@ const TagsInput = ({ tags, setTags }) => {
                                 <span key={index} className='flex items-center font-semibold  p-1 rounded bg-slate-300'>
                                     # {tag}
                                     <button
+                                        aria-label='Pencereyi Kapat'
                                         className='text-white text-xl ml-2 bg-red-600 rounded'
                                         onClick={() => handleRemoveTag(tag)}>
                                         <MdClose />
@@ -59,6 +60,7 @@ const TagsInput = ({ tags, setTags }) => {
                     onKeyDown={handleKeyDown} />
 
                 <button
+                    aria-label='Ekle'
                     onClick={() => addNewTag()}
                     className='w-9 h-9 flex justify-center items-center rounded bg-gray-300 hover:bg-gray-100 transition-all'>
                     <MdAdd className='text-2xl text-blue-700 ' />

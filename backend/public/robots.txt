@@ -1,0 +1,19 @@
+User-agent: *  # Tüm arama motorları için geçerlidir
+
+# Taramayı yasaklanan dizinler
+Disallow: /models/  # Örnek: Veritabanı modelleri
+Disallow: /node_modules/  # Örnek: Node.js modülleri
+Disallow: /routes/  # Örnek: Express.js rotaları
+Disallow: /utils/  # Örnek: Yardımcı fonksiyonlar
+
+# Tarama izin verilen dizinler
+Allow: /public/  # Örnek: Statik dosyalar (CSS, JS, resimler)
+Allow: /  # Ana dizin (index.js ve diğer backend dosyaları)
+
+# Özel dosyaları dışarıya kapatalım
+Disallow: /.env  # Örnek: Çevre değişkenleri dosyası
+Disallow: /.gitignore  # Git ignore dosyası
+
+# Diğer özel dosyaların veya uzantıların taraması kapatılabilir
+# Örneğin: .json dosyaları
+Disallow: /*.json

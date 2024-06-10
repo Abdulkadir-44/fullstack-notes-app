@@ -4,39 +4,46 @@ import { signUpPost } from "../services"
 import { validateEmail } from "../utils/helper"
 import { useNavigate, NavLink } from "react-router-dom"
 import { ThreeDots } from "react-loader-spinner"
-import { Toaster, toast } from "sonner"
+import { toast } from "sonner"
 import Navbar from '../components/Navbar/Navbar'
 
 const SignUp = () => {
 
-  const [fullName, setFullName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [user, setUser] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+  })
+
   const [error, setError] = useState(null)
   const [loader, setLoader] = useState(false)
   const navigate = useNavigate()
+
+  const handleChange = (e) => {
+    setUser(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  }
 
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!fullName) {
+    if (!user.fullName) {
       setError("Lütfen Ad-Soyad girin !")
       return;
     }
-    if (!validateEmail(email)) {
+    if (!validateEmail(user.email)) {
       setError("Lütfen geçerli bir mail girin !")
       return;
     }
 
-    if (!password) {
+    if (!user.password) {
       setError("Şifre zorunlu !")
       return;
     }
 
     setError('')
     setLoader(true)
-    signUpPost({ fullName, email, password })
+    signUpPost(user)
       .then(data => {
         setLoader(false)
         console.log(data);
@@ -68,8 +75,9 @@ const SignUp = () => {
 
               <div className='flex items-center border-b  bg-transparent px-5 rounded my-6 text-white font-semibold'>
                 <input
-                  value={fullName}
-                  onChange={e => setFullName(e.target.value)}
+                  name='fullName'
+                  value={user.fullName}
+                  onChange={handleChange}
                   className='input'
                   type="text"
                   // name=""
@@ -79,8 +87,9 @@ const SignUp = () => {
 
               <div className='flex items-center border-b  bg-transparent px-5 rounded my-6 text-white font-semibold'>
                 <input
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
+                  name='email'
+                  value={user.email}
+                  onChange={handleChange}
                   className='input'
                   type="text"
                   // name=""
@@ -89,14 +98,16 @@ const SignUp = () => {
               </div>
 
               <PasswordInput
+                name="password"
                 placeholder="Şifre"
-                value={password}
-                onChange={e => setPassword(e.target.value)} />
+                value={user.password}
+                onChange={handleChange} />
 
               {error && <div className='text-red-400 font-semibold text-xs md:text-sm text-center'>{error}</div>}
 
               <div className='text-center'>
                 <button
+                  aria-label='Kayıt'
                   type='submit'
                   className='button flex justify-center items-center'>
                   {

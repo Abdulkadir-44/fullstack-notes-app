@@ -89,7 +89,7 @@ router.post("/login", async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, userInfo.password)
 
         if (userInfo.email === email && passwordMatch) {
-            const accesToken = jwt.sign({ userId: userInfo._id, email: userInfo.email }, process.env.JWT_SECRET, { expiresIn: "2h" })
+            const accesToken = jwt.sign({ userId: userInfo._id, email: userInfo.email }, process.env.JWT_SECRET, { expiresIn: "4h" })
             return res.status(201).json({
                 error: false,
                 message: "Giriş Başarılı",

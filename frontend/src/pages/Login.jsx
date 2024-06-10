@@ -6,33 +6,40 @@ import { useDispatch } from "react-redux"
 import { userLogin } from "../redux/userSlice"
 import { useNavigate, NavLink } from "react-router-dom"
 import { ThreeDots } from "react-loader-spinner"
-import { Toaster, toast } from "sonner"
+import { toast } from "sonner"
 import Navbar from '../components/Navbar/Navbar'
 
 const Login = () => {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [user, setUser] = useState({
+        email: "",
+        password: ""
+    })
+
     const [error, setError] = useState(null)
     const [loader, setLoader] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const handleChange = (e) => {
+        setUser(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    }
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if (!validateEmail(email)) {
+        if (!validateEmail(user.email)) {
             setError("Lütfen geçerli bir mail girin !")
             return;
         }
 
-        if (!password) {
+        if (!user.password) {
             setError("Şifre zorunlu !")
             return;
         }
 
         setError('')
         setLoader(true)
-        loginPost({ email, password })
+        loginPost(user)
             .then(data => {
                 setLoader(false)
                 toast.success(`Hoşgeldiniz ${data.userInfo.fullName}`)
@@ -59,23 +66,25 @@ const Login = () => {
                             <h1 className='text-center text-3xl font-semibold mb-5 md:text-4xl text-gray-100'>Login</h1>
                             <div className='flex items-center border-b  bg-transparent px-5 rounded my-6 text-white font-semibold'>
                                 <input
-                                    value={email}
-                                    onChange={e => setEmail(e.target.value)}
+                                    value={user.email}
+                                    onChange={handleChange}
                                     className='input'
                                     type="text"
-                                    name=""
+                                    name="email"
                                     id=""
                                     placeholder='Email' />
                             </div>
 
                             <PasswordInput
-                                value={password}
-                                onChange={e => setPassword(e.target.value)} />
+                                name="password"
+                                value={user.password}
+                                onChange={handleChange} />
 
                             {error && <div className='text-red-400 font-semibold text-xs md:text-sm text-center'>{error}</div>}
 
                             <div className='text-center'>
                                 <button
+                                aria-label='Giriş'
                                     type='submit'
                                     className='button flex justify-center items-center'>
                                     {

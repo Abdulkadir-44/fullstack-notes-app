@@ -75,6 +75,7 @@ const Home = () => {
             isNotes={notes.length > 0 ? true : false} />
 
           <button
+            aria-label='Ekle'
             onClick={() => {
               setOpenAddEditModal({ isShown: true, data: null });
             }}
@@ -112,6 +113,7 @@ const Home = () => {
         </div>
 
         <button
+        aria-label='Ekle'
           onClick={() => {
             setOpenAddEditModal({ isShown: true, data: null });
           }}
